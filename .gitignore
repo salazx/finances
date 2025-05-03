@@ -1,0 +1,25 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environments
+.env
+.venv/
+env/
+venv
+
+# IDE files
+.vscode/
+*.swp
+
+# Gmail API credentials
+token.json
+gmail_token.json
+client_secret.json
+
+# SQLite Database
+*.db
+
+# Logs or debug output
+*.log
