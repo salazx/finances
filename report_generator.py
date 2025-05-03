@@ -25,6 +25,7 @@ def generate_report(date_str=None):
             return
 
     db = Database()
+    total_spent = 0
 
     try:
         summary = db.get_monthly_summary(str(month).zfill(2), year)
@@ -35,10 +36,12 @@ def generate_report(date_str=None):
         if summary:
             for category, total in summary:
                 print(f"{category}: ${total:.2f}")
+                total_spent += total
         else:
             print("No transactions found for this period.")
 
         print("-" * 40)
+        print(f"Total Spent: ${total_spent:.2f}")
 
     except Exception as e:
         print(f"Error generating report: {e}")
