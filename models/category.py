@@ -81,5 +81,21 @@ class Category:
         Returns the category for a given vendor based on the mapping.
         If no match is found, default sets to "Misc."
         """
-        return cls.vendor_category_map.get(vendor, "Misc.")
+        
+        category = cls.vendor_category_map.get(vendor)
+        valid_categories = set(cls.vendor_category_map.values())
+        if not category:
+            print(f"\nNo category found for vendor: '{vendor}'")
+            print("Valid categories:", ", ".join(valid_categories))
+
+            while True:
+                user_input = input("Please enter a category for this vendor: ").strip()
+                if user_input in valid_categories:
+                    category = user_input
+                    cls.vendor_category_map[vendor] = category
+                    break
+                else:
+                    print("Invalid category. Please try again.")
+
+        return category
 
