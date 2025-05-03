@@ -25,17 +25,15 @@ def main():
     args = parser.parse_args()
 
     """ Main function for application workflow """
- 
-    # Step 1: Setup database for first time users
-    setup_database()
 
-    # Step 2: Parse emails to collect transaction data
+    # with flag -p: Parse emails to collect transaction data
     if not args.report_only:
+        setup_database() # Setup database for first time users
         print("Running email parser...")
         parse_emails(use_sample_emails=False)
     
+    # with flag -r: generates report only
     if not args.parse_only:
-       
         try:
             # Prompt user for month and year for desired report
             month = int(input("Enter the month (1-12) for the report: "))
