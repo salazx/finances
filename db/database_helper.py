@@ -5,7 +5,7 @@ import sqlite3
 class Database:
     def __init__(self):
         # Initializes database object and connects to SQLite database
-        self.db_name = "/home/profx/Documents/Code/Finances/finance/core/db/finances.db" 
+        self.db_name = "/home/profx/Documents/Code/Finances/finances/db/finances.db" 
         self.conn = sqlite3.connect(self.db_name)
         self.cursor = self.conn.cursor()
     
