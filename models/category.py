@@ -46,10 +46,12 @@ class Category:
         "GORE MOUNTAIN WEB": "Entertainment",
         "SLIPPI LLC": "Entertainment",
         "Spotify USA": "Entertainment",
+        "Purple Kush": "Entertainment",
 
         "AUTOZONE #5003": "Car Supplies",
         "RMV E-SERVICES": "Car Supplies",
-        
+        "GB License": "Car Supplies",
+
         "CVS/PHARMACY #00714": "House Supplies",
 
         "LYFT   *RIDE SAT 7PM": "Travel",
