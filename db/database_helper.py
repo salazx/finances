@@ -86,6 +86,40 @@ class Database:
         result = self.execute_query(query, (account_name, ))
         return result[0][0] if result else None # Return account_id if found, else None
 
+    def get_category_for_vendordb(self, vendor_name):
+        """Returns category name for given vendor based on vendor_categories"""
+        vendor_id = self.get_vendor_id(vendor_name)
+        if not vendor_id:
+            return None
+
+        query = """
+        SELECT c.category_name
+        FROM categories c
+        JOIN vendor_categories vc on vc.category_id = c.category_id
+        WHERE vc.vendor_id = ?
+        """
+        result = self.execute_query(query, (vendor_id,))
+        return result[0][0] if result else None
+
+    def assign_category_to_vendor(self, vendor_name, category_name):
+        """ Assign a category o a vendor in the vendor_categories table."""
+        vendor_id = self.get_vendor_id(vendor_name)
+        category_id = self.get_category_id(category_name)
+        
+        if not vendor_id or not category_id:
+            print("Error: Vendor or Category does not exist in the database.")
+            return
+
+        query = """
+        INSERT OR REPLACE INTO vendor_categories (vendor_id, category_id)
+        VALUES (?, ?)
+        """
+        self.execute_query(query, (vendor_id, category_id))
+
+    def get_all_categories(self):
+        query = "SELECT category_name FROM categories"
+        results = self.execute_query(query)
+        return [row[0] for row in results] if results else []
 
     def insert_transactions(self, transactions):
         # Inserts found transactions from email parser

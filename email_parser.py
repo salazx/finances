@@ -108,7 +108,27 @@ def parse_emails(gmail=None, use_sample_emails=False):
                 for message, data in zip(batch, results):
                     # Set transaction class attributes based on parsed data from chatgpt
                     vendor = data.get("Vendor name")
-                    category = Category.get_category_for_vendor(vendor)
+                   
+                    # Import vendors into vendor table of database for catgorizing
+                    if vendor:
+                        db.insert_vendors([vendor])
+
+                    category = db.get_category_for_vendordb(vendor)
+                    
+                    if not category:
+                        print(f"\nNo category found for vendor: '{vendor}'")
+                        valid_categories = db.get_all_categories()
+                        print("Valid categories:", ", ".join(valid_categories))
+
+                        while True:
+                            user_input = input("Please enter a category for this vendor: ").strip()
+                            if user_input in valid_categories:
+                                category = user_input
+                                db.assign_category_to_vendor(vendor, category)
+                                break
+                            else:
+                                print("Invalid category. Please try again.")
+
                     account = label
 
                     # Amount format conversion
@@ -124,10 +144,6 @@ def parse_emails(gmail=None, use_sample_emails=False):
                         message.mark_as_read()
                     except Exception as e:
                         print(f"Error marking email as read: {e}")
-
-                    # Import vendors into vendor table of database for catgorizing
-                    if vendor:
-                        db.insert_vendors([vendor])
 
                     # creates a transaction of the transaction class to be appended to transaction_data
                     transaction = Transaction(date, amount, vendor, category, account)
