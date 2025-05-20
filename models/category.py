@@ -4,6 +4,7 @@ class Category:
     def __init__(self, name):
         self.name = name
         self.total_amount = 0 # Sum of all transactions in this category
+# DELETE vendor_category map eventually, check if category class is used anywhere frist then maybe delete file
 
     vendor_category_map = {
         "WHOLEFDS CAM 10010": "Groceries",
@@ -76,7 +77,7 @@ class Category:
         "DENVER PAY BY PHONE": "Misc.",
         
         }
-
+    
     @classmethod
     def get_category_for_vendor(cls, vendor):
         """ 
